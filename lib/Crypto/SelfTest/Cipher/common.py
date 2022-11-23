@@ -267,13 +267,13 @@ class CTRWraparoundTest(unittest.TestCase):
             self.assertRaises(OverflowError, cipher.encrypt, block)
 
             # Test PyObject_CallObject code path: counter object should raise OverflowError
-            ctr = Counter.new(8*self.module.block_size, initial_value=2L**(8*self.module.block_size)-1, little_endian=little_endian)
+            ctr = Counter.new(8*self.module.block_size, initial_value=2**(8*self.module.block_size)-1, little_endian=little_endian)
             ctr()
             self.assertRaises(OverflowError, ctr)
             self.assertRaises(OverflowError, ctr)
 
             # Test the CTR-mode shortcut
-            ctr = Counter.new(8*self.module.block_size, initial_value=2L**(8*self.module.block_size)-1, little_endian=little_endian)
+            ctr = Counter.new(8*self.module.block_size, initial_value=2**(8*self.module.block_size)-1, little_endian=little_endian)
             cipher = self.module.new(a2b_hex(self.key), self.module.MODE_CTR, counter=ctr)
             cipher.encrypt(block)
             self.assertRaises(OverflowError, cipher.encrypt, block)
