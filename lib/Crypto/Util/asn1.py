@@ -400,7 +400,7 @@ class DerSequence(DerObject):
                 """
                 def _isInt2(x):
                     return _isInt(x, onlyNonNegative)
-                return len(filter(_isInt2, self._seq))
+                return len(list(filter(_isInt2, self._seq)))
 
         def hasOnlyInts(self, onlyNonNegative=True):
                 """Return True if all items in this sequence are integers
