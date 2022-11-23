@@ -79,18 +79,18 @@ class MiscTests(unittest.TestCase):
             self.assertEqual(0, number.ceil_shift(0, b))
 
             n = 1L
-            while n <= 2L**(b+2):
-                (q, r) = divmod(n-1, 2L**b)
+            while n <= 2**(b+2):
+                (q, r) = divmod(n-1, 2**b)
                 expected = q + int(not not r)
                 self.assertEqual((n-1, b, expected),
                                  (n-1, b, number.ceil_shift(n-1, b)))
 
-                (q, r) = divmod(n, 2L**b)
+                (q, r) = divmod(n, 2**b)
                 expected = q + int(not not r)
                 self.assertEqual((n, b, expected),
                                  (n, b, number.ceil_shift(n, b)))
 
-                (q, r) = divmod(n+1, 2L**b)
+                (q, r) = divmod(n+1, 2**b)
                 expected = q + int(not not r)
                 self.assertEqual((n+1, b, expected),
                                  (n+1, b, number.ceil_shift(n+1, b)))
@@ -189,9 +189,9 @@ class MiscTests(unittest.TestCase):
             n += 1
 
         for e in range(16, 1+64, 2):
-            self.assertRaises(ValueError, number.exact_log2, 2L**e-1)
-            self.assertEqual(e, number.exact_log2(2L**e))
-            self.assertRaises(ValueError, number.exact_log2, 2L**e+1)
+            self.assertRaises(ValueError, number.exact_log2, 2**e-1)
+            self.assertEqual(e, number.exact_log2(2**e))
+            self.assertRaises(ValueError, number.exact_log2, 2**e+1)
 
     def test_exact_div(self):
         """Util.number.exact_div"""
@@ -263,16 +263,16 @@ class MiscTests(unittest.TestCase):
         self.assertEqual(number.isPrime(2), True)
         self.assertEqual(number.isPrime(3), True)
         self.assertEqual(number.isPrime(4), False)
-        self.assertEqual(number.isPrime(2L**1279-1), True)
-        self.assertEqual(number.isPrime(-(2L**1279-1)), False)     # Regression test: negative numbers should not be prime
+        self.assertEqual(number.isPrime(2**1279-1), True)
+        self.assertEqual(number.isPrime(-(2**1279-1)), False)     # Regression test: negative numbers should not be prime
         # test some known gmp pseudo-primes taken from
         # http://www.trnicely.net/misc/mpzspsp.html
         for composite in (43 * 127 * 211, 61 * 151 * 211, 15259 * 30517,
-                          346141L * 692281L, 1007119L * 2014237L, 3589477L * 7178953L,
-                          4859419L * 9718837L, 2730439L * 5460877L,
-                          245127919L * 490255837L, 963939391L * 1927878781L,
-                          4186358431L * 8372716861L, 1576820467L * 3153640933L):
-            self.assertEqual(number.isPrime(long(composite)), False)
+                          346141 * 692281, 1007119 * 2014237, 3589477 * 7178953,
+                          4859419 * 9718837, 2730439 * 5460877,
+                          245127919 * 490255837, 963939391 * 1927878781,
+                          4186358431 * 8372716861, 1576820467 * 3153640933):
+            self.assertEqual(number.isPrime(composite), False)
 
     def test_size(self):
         self.assertEqual(number.size(2),2)
@@ -289,7 +289,7 @@ class FastmathTests(unittest.TestCase):
     def test_negative_number_roundtrip_mpzToLongObj_longObjToMPZ(self):
         """Test that mpzToLongObj and longObjToMPZ (internal functions) roundtrip negative numbers correctly."""
         n = -100000000000000000000000000000000000L
-        e = 2L
+        e = 2
         k = number._fastmath.rsa_construct(n, e)
         self.assertEqual(n, k.n)
         self.assertEqual(e, k.e)
