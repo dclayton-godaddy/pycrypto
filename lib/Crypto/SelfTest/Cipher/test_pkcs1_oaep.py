@@ -269,7 +269,7 @@ class PKCS1_OAEP_Tests(unittest.TestCase):
                 # Verify encryption using all test vectors
                 for test in self._testData:
                         # Build the key
-                        comps = [ long(rws(test[0][x]),16) for x in ('n','e') ]
+                        comps = [ int(rws(test[0][x]),16) for x in ('n','e') ]
                         key = RSA.construct(comps)
                         # RNG that takes its random numbers from a pool given
                         # at initialization
@@ -297,7 +297,7 @@ class PKCS1_OAEP_Tests(unittest.TestCase):
                 # Verify decryption using all test vectors
                 for test in self._testData:
                         # Build the key
-                        comps = [ long(rws(test[0][x]),16) for x in ('n','e','d') ]
+                        comps = [ int(rws(test[0][x]),16) for x in ('n','e','d') ]
                         key = RSA.construct(comps)
                         # The real test
                         cipher = PKCS.new(key, test[4])

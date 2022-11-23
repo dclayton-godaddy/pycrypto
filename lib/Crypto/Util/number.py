@@ -32,7 +32,6 @@ import math
 import sys
 from Crypto.Util.py3compat import *
 
-bignum = long
 try:
     from Crypto.PublicKey import _fastmath
 except ImportError:
