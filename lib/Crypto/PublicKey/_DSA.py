@@ -40,7 +40,7 @@ def generateQ(randfunc):
     S=randfunc(20)
     hash1=SHA1.new(S).digest()
     hash2=SHA1.new(long_to_bytes(bytes_to_long(S)+1)).digest()
-    q = bignum(0)
+    q = 0
     for i in range(0,20):
         c=bord(hash1[i])^bord(hash2[i])
         if i==0:
@@ -50,7 +50,7 @@ def generateQ(randfunc):
         q=q*256+c
     while (not isPrime(q)):
         q=q+2
-    if pow(2,159L) < q < pow(2,160L):
+    if pow(2,159) < q < pow(2,160):
         return S, q
     raise RuntimeError('Bad q value generated')
 
