@@ -104,7 +104,7 @@ class AESCipher (blockalgo.BlockAlgo):
 
         # Check if the use_aesni was specified.
         use_aesni = True
-        if kwargs.has_key('use_aesni'):
+        if 'use_aesni' in kwargs:
             use_aesni = kwargs['use_aesni']
             del kwargs['use_aesni']
 
