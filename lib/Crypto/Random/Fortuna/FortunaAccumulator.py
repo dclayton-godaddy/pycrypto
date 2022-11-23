@@ -34,7 +34,7 @@ import time
 import warnings
 
 from Crypto.pct_warnings import ClockRewindWarning
-import SHAd256
+from Crypto.Random.OSRNG import SHAd256
 
 # If the system has monotonic time, we'll use it.
 from Crypto.Util._time import maybe_monotonic_time
