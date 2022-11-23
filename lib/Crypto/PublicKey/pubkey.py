@@ -53,7 +53,7 @@ class pubkey:
 number representation being used, whether that is Python long
 integers, MPZ objects, or whatever."""
         for key in self.keydata:
-            if d.has_key(key): self.__dict__[key]=bignum(d[key])
+            if d.has_key(key): self.__dict__[key]=int(d[key])
 
     def encrypt(self, plaintext, K):
         """Encrypt a piece of data.
@@ -68,9 +68,9 @@ integers, MPZ objects, or whatever."""
          plaintext (string or long).
         """
         wasString=0
-        if isinstance(plaintext, str):
+        if isinstance(plaintext, (str, bytes)):
             plaintext=bytes_to_long(plaintext) ; wasString=1
-        if isinstance(K, str):
+        if isinstance(K, (str, bytes)):
             K=bytes_to_long(K)
         ciphertext=self._encrypt(plaintext, K)
         if wasString: return tuple(map(long_to_bytes, ciphertext))
@@ -86,9 +86,9 @@ integers, MPZ objects, or whatever."""
          of byte strings. A long otherwise.
         """
         wasString=0
-        if not isinstance(ciphertext, types.TupleType):
+        if not isinstance(ciphertext, tuple):
             ciphertext=(ciphertext,)
-        if isinstance(ciphertext[0], types.StringType):
+        if isinstance(ciphertext[0], (str, bytes)):
             ciphertext=tuple(map(bytes_to_long, ciphertext)) ; wasString=1
         plaintext=self._decrypt(ciphertext)
         if wasString: return long_to_bytes(plaintext)
