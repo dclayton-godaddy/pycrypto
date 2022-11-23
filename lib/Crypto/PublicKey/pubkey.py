@@ -68,9 +68,9 @@ integers, MPZ objects, or whatever."""
          plaintext (string or long).
         """
         wasString=0
-        if isinstance(plaintext, types.StringType):
+        if isinstance(plaintext, str):
             plaintext=bytes_to_long(plaintext) ; wasString=1
-        if isinstance(K, types.StringType):
+        if isinstance(K, str):
             K=bytes_to_long(K)
         ciphertext=self._encrypt(plaintext, K)
         if wasString: return tuple(map(long_to_bytes, ciphertext))
