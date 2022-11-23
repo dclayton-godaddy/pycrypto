@@ -80,7 +80,7 @@ def generate_py(bits, randfunc, progress_func=None):
                 V[k]=bytes_to_long(SHA1.new(S+bstr(N)+bstr(k)).digest())
             W=V[n] % powb
             for k in range(n-1, -1, -1):
-                W=(W<<160L)+V[k]
+                W=(W<<160)+V[k]
             X=W+powL1
             p=X-(X%(2*obj.q)-1)
             if powL1<=p and isPrime(p):
