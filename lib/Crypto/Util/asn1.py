@@ -595,8 +595,8 @@ class DerObjectId(DerObject):
         """Return the DER OBJECT ID, fully encoded as a
         binary string."""
 
-        comps = map(int,self.value.split("."))
-        if comps.size() <2:
+        comps = list(map(int,self.value.split(".")))
+        if len(comps) < 2:
             raise ValueError("Not a valid Object Identifier string")
         self.payload = bchr(40*comps[0]+comps[1])
         for v in comps[2:]:
