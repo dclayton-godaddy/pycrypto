@@ -312,7 +312,7 @@ class PKCS1_OAEP_Tests(unittest.TestCase):
 
         def testEncryptDecrypt1(self):
                 # Encrypt/Decrypt messages of length [0..128-2*20-2]
-                for pt_len in xrange(0,128-2*20-2):
+                for pt_len in range(0,128-2*20-2):
                     pt = self.rng(pt_len)
                     cipher = PKCS.new(self.key1024)
                     ct = cipher.encrypt(pt)

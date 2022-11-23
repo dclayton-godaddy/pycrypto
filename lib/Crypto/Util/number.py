@@ -153,8 +153,8 @@ def inverse(u, v):
     """inverse(u:long, v:long):long
     Return the inverse of u mod v.
     """
-    u3, v3 = long(u), long(v)
-    u1, v1 = 1L, 0L
+    u3, v3 = u, v
+    u1, v1 = 1, 0
     while v3 > 0:
         q=divmod(u3, v3)[0]
         u1, v1 = v1, u1 - v1*q
@@ -208,7 +208,7 @@ def _rabinMillerTest(n, rounds, randfunc=None):
 
     tested = []
     # we need to do at most n-2 rounds.
-    for i in xrange (min (rounds, n-2)):
+    for i in range (min (rounds, n-2)):
         # randomly choose a < n and make sure it hasn't been tested yet
         a = getRandomRange (2, n, randfunc)
         while a in tested:
@@ -219,7 +219,7 @@ def _rabinMillerTest(n, rounds, randfunc=None):
         if z == 1 or z == n_1:
             continue
         composite = 1
-        for r in xrange (b):
+        for r in range (b):
             z = (z * z) % n
             if z == 1:
                 return 0
@@ -261,7 +261,7 @@ def getStrongPrime(N, e=0, false_positive_prob=1e-6, randfunc=None):
 
     # Use the accelerator if available
     if _fastmath is not None:
-        return _fastmath.getStrongPrime(long(N), long(e), false_positive_prob,
+        return _fastmath.getStrongPrime(N, e, false_positive_prob,
             randfunc)
 
     if (N < 512) or ((N % 128) != 0):
@@ -272,12 +272,12 @@ def getStrongPrime(N, e=0, false_positive_prob=1e-6, randfunc=None):
     # calculate range for X
     #   lower_bound = sqrt(2) * 2^{511 + 128*x}
     #   upper_bound = 2^{512 + 128*x} - 1
-    x = (N - 512) >> 7;
+    x = (N - 512) >> 7
     # We need to approximate the sqrt(2) in the lower_bound by an integer
     # expression because floating point math overflows with these numbers
-    lower_bound = divmod(14142135623730950489L * (2 ** (511 + 128*x)),
-                         10000000000000000000L)[0]
-    upper_bound = (1L << (512 + 128*x)) - 1
+    lower_bound = divmod(14142135623730950489 * (2 ** (511 + 128*x)),
+                         10000000000000000000)[0]
+    upper_bound = (1 << (512 + 128*x)) - 1
     # Randomly choose X in calculated range
     X = getRandomRange (lower_bound, upper_bound, randfunc)
 
@@ -291,7 +291,7 @@ def getStrongPrime(N, e=0, false_positive_prob=1e-6, randfunc=None):
         # sieve the field
         for prime in sieve_base:
             offset = y % prime
-            for j in xrange ((prime - offset) % prime, len (field), prime):
+            for j in range ((prime - offset) % prime, len (field), prime):
                 field[j] = 1
 
         # look for suitable p[i] starting at y
@@ -347,7 +347,7 @@ def getStrongPrime(N, e=0, false_positive_prob=1e-6, randfunc=None):
         X += increment
 		# abort when X has more bits than requested
 		# TODO: maybe we shouldn't abort but rather start over.
-        if X >= 1L << N:
+        if X >= 1 << N:
             raise RuntimeError ("Couln't find prime in field. "
                                 "Developer: Increase field_size")
     return X
@@ -365,7 +365,7 @@ def isPrime(N, false_positive_prob=1e-6, randfunc=None):
     If randfunc is omitted, then Random.new().read is used.
     """
     if _fastmath is not None:
-        return _fastmath.isPrime(long(N), false_positive_prob, randfunc)
+        return _fastmath.isPrime(N, false_positive_prob, randfunc)
 
     if N < 3 or N & 1 == 0:
         return N == 2
@@ -394,10 +394,10 @@ def long_to_bytes(n, blocksize=0):
     """
     # after much testing, this algorithm was deemed to be the fastest
     s = b('')
-    n = long(n)
+    n = n
     pack = struct.pack
     while n > 0:
-        s = pack('>I', n & 0xffffffffL) + s
+        s = pack('>I', n & 0xffffffff) + s
         n = n >> 32
     # strip off leading zeros
     for i in range(len(s)):
@@ -420,7 +420,7 @@ def bytes_to_long(s):
 
     This is (essentially) the inverse of long_to_bytes().
     """
-    acc = 0L
+    acc = 0
     unpack = struct.unpack
     length = len(s)
     if length % 4:

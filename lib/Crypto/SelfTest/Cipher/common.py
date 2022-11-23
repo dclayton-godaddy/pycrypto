@@ -151,7 +151,7 @@ class CipherSelfTest(unittest.TestCase):
         # Repeat the same encryption or decryption twice and verify
         # that the result is always the same
         #
-        for i in xrange(2):
+        for i in range(2):
             cipher = self._new()
             decipher = self._new(1)
 
@@ -478,7 +478,7 @@ class AEADTests(unittest.TestCase):
         if self.isMode("SIV"):
             return
 
-        ad = b("").join([bchr(x) for x in xrange(0,128)])
+        ad = b("").join([bchr(x) for x in range(0,128)])
 
         mac1, mac2, mac3 = (None,)*3
         for chunk_length in 1,10,40,80,128:
